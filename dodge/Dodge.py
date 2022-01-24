@@ -161,8 +161,6 @@ def is_crush(player):
                 return 1
             elif player_y + VALUE <= (dust_y + dust_h) <= (player_y + player_h):
                 return 1
-        
-        
 
 
 def show_menu():
