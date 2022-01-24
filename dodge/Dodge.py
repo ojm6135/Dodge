@@ -127,7 +127,7 @@ def manage_dust():
         dust.move()
         reposition_obj(dust)
         
-        # dust 지속 시간 체크
+        # Dust 지속 시간 체크
         end = curr - dust.get_time()
         if end >= DURATION:
             remove_li.append(dust)
