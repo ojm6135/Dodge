@@ -55,7 +55,7 @@ class Dust:
         
         self.SPEED = 3
         
-        self.start_time = time.time()
+        self.created_time = time.time()
         
     def remove(self):
         del self
@@ -82,11 +82,28 @@ class Dust:
         return self.SPEED
     
     def get_time(self):
-        return self.start_time
+        return self.created_time
 
     def show(self):
         screen.blit(self.img, (self.pos_x, self.pos_y))
+
    
+# 오브젝트가 화면을 넘어갔을 때 반대편에서 나오게 위치 조정
+def reposition_obj(obj):
+    x, y = obj.get_pos()
+    
+    if x < 0:
+        obj.set_pos(x + screen_size[0], y)
+
+    elif x > screen_size[0]:
+        obj.set_pos(x - screen_size[0], y)
+
+    elif y < 0:
+        obj.set_pos(x, y + screen_size[1])
+
+    elif y > screen_size[1]:
+        obj.set_pos(x, y - screen_size[1])
+        
    
 def create_dust(k):
     if k % 10 == 0:
@@ -115,7 +132,7 @@ def manage_dust():
         if end >= DURATION:
             remove_li.append(dust)
             
-    # 생성된 지 DURATION초가 지난 dust 삭제
+    # 생성된 지 DURATION초가 지난 Dust 삭제
     for dust in reversed(remove_li):
         dust_li.remove(dust)
             
@@ -146,25 +163,6 @@ def is_crush(player):
                 return 1
         
         
-# 초기화
-pg.init()
-
-# 환경 설정
-pg.display.set_caption('Dodge')
-screen_size = (640, 480)
-screen = pg.display.set_mode(screen_size)
-done = False
-clock = pg.time.Clock()
-
-VALUE = 10  # 충돌 계산 보정값
-dust_li = []  # 생성된 Dust를 담는 리스트
-
-# Dust의 이동 방향 - 동, 서, 남, 북, 동남, 동북, 서남, 서북
-directions = [ (1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1) ]
-
-# 배경 설정
-background_img = pg.image.load(r'C:\MyProjects\dodge\dodge\images\MainBackground.jpg')
-background_img = pg.transform.scale(background_img, (screen_size[0], screen_size[1]))
 
 
 def show_menu():
@@ -248,24 +246,7 @@ def show_gameover():
                 elif event.key == pg.K_ESCAPE:
                     flag = False
                     show_menu()
-                    
-    
-# 오브젝트가 화면을 넘어갔을 때 반대편에서 나오게 위치 조정
-def reposition_obj(obj):
-    x, y = obj.get_pos()
-    
-    if x < 0:
-        obj.set_pos(x + screen_size[0], y)
-
-    elif x > screen_size[0]:
-        obj.set_pos(x - screen_size[0], y)
-
-    elif y < 0:
-        obj.set_pos(x, y + screen_size[1])
-
-    elif y > screen_size[1]:
-        obj.set_pos(x, y - screen_size[1])
-                    
+                                
 
 def run_game():
     global done
@@ -326,6 +307,27 @@ def run_game():
                show_gameover()
         pg.display.flip()
         
+        
+# 초기화
+pg.init()
+
+# 환경 설정
+pg.display.set_caption('Dodge')
+screen_size = (640, 480)
+screen = pg.display.set_mode(screen_size)
+done = False
+clock = pg.time.Clock()
+
+VALUE = 10  # 충돌 계산 보정값
+dust_li = []  # 생성된 Dust를 담는 리스트
+
+# Dust의 이동 방향 - 동, 서, 남, 북, 동남, 동북, 서남, 서북
+directions = [ (1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1) ]
+
+# 배경 설정
+background_img = pg.image.load(r'C:\MyProjects\dodge\dodge\images\MainBackground.jpg')
+background_img = pg.transform.scale(background_img, (screen_size[0], screen_size[1]))
+
         
 if __name__ == '__main__':
     show_menu()
