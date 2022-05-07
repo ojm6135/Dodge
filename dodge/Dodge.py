@@ -1,13 +1,23 @@
 import pygame as pg
 import random
 import time
+import os, sys
+
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 
 class Player:
     SPEED = 2.5
     
     def __init__(self):
-        self.img = pg.image.load(r'C:\MyProjects\dodge\dodge\images\Spaceship.PNG')
+        self.img = pg.image.load(resource_path(r'resource\Spaceship.PNG'))
         self.img_size = (25, 25)
         self.img = pg.transform.scale(self.img, self.img_size)
         
@@ -42,7 +52,7 @@ class Player:
     
 class Dust:    
     def __init__(self):
-        self.img = pg.image.load(f'C:\\MyProjects\\dodge\\dodge\\images\\asteroids/{["a", "b"][random.randint(0, 1)]}{random.randint(10000, 10015)}.png')
+        self.img = pg.image.load(resource_path(f'resource\\asteroids/{["a", "b"][random.randint(0, 1)]}{random.randint(10000, 10015)}.png'))
         self.img_size = (15, 15)
         self.img = pg.transform.scale(self.img, self.img_size)
         
@@ -166,11 +176,11 @@ def is_crush(player):
 def show_menu():
     global done
     
-    background = pg.image.load(r'C:\MyProjects\dodge\dodge\images\MenuBackground.jpg')
+    background = pg.image.load(resource_path(r'resource\MenuBackground.jpg'))
     background = pg.transform.scale(background, (700, 700))
     
-    start_font = pg.font.Font(r'C:\MyProjects\dodge\dodge\OpenSans-Regular.ttf', 30)
-    quit_font = pg.font.Font(r'C:\MyProjects\dodge\dodge\OpenSans-Regular.ttf', 28)
+    start_font = pg.font.Font(resource_path(r'resource\OpenSans-Regular.ttf'), 30)
+    quit_font = pg.font.Font(resource_path(r'resource\OpenSans-Regular.ttf'), 28)
     start_txt = 'Start:    SPACE'
     quit_txt = 'Quit:        ESC'
     width = pg.font.Font.size(start_font, start_txt)[0]
@@ -203,7 +213,7 @@ def show_menu():
 def show_timer(start_t):
     global done
     
-    font = pg.font.Font(r'C:\MyProjects\dodge\dodge\OpenSans-Regular.ttf', 25)
+    font = pg.font.Font(resource_path(r'resource\OpenSans-Regular.ttf'), 25)
     end_t = time.time()
     txt = f'{end_t - start_t:.2f}'
     width = pg.font.Font.size(font, txt)[0]
@@ -214,14 +224,14 @@ def show_timer(start_t):
 def show_gameover():
     global done
     
-    # font_1 = pg.font.Font('OpenSans-Regular.ttf', 35)
+    # font_1 = pg.font.Font(resource_path('resource\OpenSans-Regular.ttf'), 35)
     # txt_1 = 'Game Over'
     # width_1 = pg.font.Font.size(font_1, txt_1)[0]
     # height_1 = pg.font.Font.get_height(font_1)
     # text_1 = font_1.render(txt_1, True, (255, 255, 255))
     # screen.blit(text_1, ( (screen_size[0] - width_1) / 2, screen_size[1] / 2 - 180) )
     
-    font_2 = pg.font.Font(r'C:\MyProjects\dodge\dodge\OpenSans-Regular.ttf', 27)
+    font_2 = pg.font.Font(resource_path(r'resource\OpenSans-Regular.ttf'), 27)
     txt_2 = 'Retry:   SPACE                       Menu:   ESC'
     width_2 = pg.font.Font.size(font_2, txt_2)[0]
     height_2 = pg.font.Font.get_height(font_2)
@@ -323,7 +333,7 @@ dust_li = []  # 생성된 Dust를 담는 리스트
 directions = [ (1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1) ]
 
 # 배경 설정
-background_img = pg.image.load(r'C:\MyProjects\dodge\dodge\images\MainBackground.jpg')
+background_img = pg.image.load(resource_path(r'resource\MainBackground.jpg'))
 background_img = pg.transform.scale(background_img, (screen_size[0], screen_size[1]))
 
         

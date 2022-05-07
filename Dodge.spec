@@ -4,10 +4,10 @@
 block_cipher = None
 
 
-a = Analysis(['Dodge.py'],
+a = Analysis(['dodge\\Dodge.py'],
              pathex=[],
              binaries=[],
-             datas=[],
+             datas=[('dodge\\resource\\asteroids', 'resource\\asteroids'), ('dodge\\resource\\*.jpg', 'resource'), ('dodge\\resource\\*.ttf', 'resource'), ('dodge\\resource\\Spaceship.PNG', 'resource')],
              hiddenimports=[],
              hookspath=[],
              hooksconfig={},
@@ -33,7 +33,7 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True,
+          console=False,
           disable_windowed_traceback=False,
           target_arch=None,
           codesign_identity=None,
